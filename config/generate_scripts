@@ -25,4 +25,7 @@ def level(uri)
   puts "#{game}\tLevel#{$level}\t#{level}\t#{$skin}\t#{$concepts.join(',')}\t"
 end
 
-Dir.glob('*.script').each { |script| load script }
+Dir.glob('*.script').each do |script|
+  $stdout.reopen("#{script}.csv", "w")
+  load script
+end
