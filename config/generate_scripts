@@ -25,7 +25,7 @@ def level(uri)
   puts "#{$stage}\t#{$concepts.join(',')}\t#{level_id}\t"
 end
 
-Dir.glob('*.script').each do |script|
+Dir.glob('scripts/*.script').each do |script|
   $stdout.reopen("#{script}.csv", "w")
   puts("Stage  Concepts  LevelID")
   load script
