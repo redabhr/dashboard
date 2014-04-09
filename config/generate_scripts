@@ -21,11 +21,12 @@ end
 
 def level(uri)
   $level += 1
-  game, level = uri.split('://')
-  puts "#{game}\tLevel#{$level}\t#{level}\t#{$skin}\t#{$concepts.join(',')}\t"
+  level_id = uri.gsub(/.*org\/games\/\d+\/levels\/(\d+)/, "\\1")
+  puts "#{stage}\t#{$concepts.join(',')}\t#{level_id}\t"
 end
 
 Dir.glob('*.script').each do |script|
   $stdout.reopen("#{script}.csv", "w")
+  puts("Stage  Concepts  LevelID")
   load script
 end

@@ -75,6 +75,7 @@ namespace :seed do
   COL_CONCEPTS = 'Concepts'
   COL_URL = 'Url'
   COL_SKIN = 'Skin'
+  COL_LEVELID = 'LevelID'
 
   task scripts: :environment do
     Script.transaction do
@@ -97,13 +98,18 @@ namespace :seed do
 
         CSV.read(source[:file], { col_sep: "\t", headers: true }).each_with_index do |row, index|
           game = game_map[row[COL_GAME].squish]
-          level = Level.find_by_game_id_and_level_num(game.id, row[COL_LEVEL])
-          if (level.nil?)
-            level = Level.create(:game_id => game.id, :level_num => row[COL_LEVEL], :name => row[COL_NAME])
+          level_id = row[COL_LEVELID]
+          if level_id
+            level = Level.find(level_id)
+          else
+            level = Level.find_by_game_id_and_level_num(game.id, row[COL_LEVEL])
+            if (level.nil?)
+              level = Level.create(:game_id => game.id, :level_num => row[COL_LEVEL], :name => row[COL_NAME])
+            end
+            level.name = row[COL_NAME]
+            level.level_url ||= row[COL_URL]
+            level.skin = row[COL_SKIN]
           end
-          level.name = row[COL_NAME]
-          level.level_url ||= row[COL_URL]
-          level.skin = row[COL_SKIN]
 
           if level.concepts.empty?
             if row[COL_CONCEPTS]
