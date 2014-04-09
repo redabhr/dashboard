@@ -22,7 +22,7 @@ end
 def level(uri)
   $level += 1
   level_id = uri.gsub(/.*org\/games\/\d+\/levels\/(\d+)/, "\\1")
-  puts "#{stage}\t#{$concepts.join(',')}\t#{level_id}\t"
+  puts "#{$stage}\t#{$concepts.join(',')}\t#{level_id}\t"
 end
 
 Dir.glob('*.script').each do |script|
