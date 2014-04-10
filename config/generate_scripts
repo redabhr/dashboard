@@ -31,6 +31,6 @@ source = File.expand_path(ARGV.fetch(0, "#{dash_root}/config/scripts/*.script"))
 
 Dir.glob(source).each do |script|
   $stdout.reopen("#{script}.csv", "w")
-  puts("Stage\tConcepts\tLevelID\tGame\t")
+  puts("Stage\tConcepts\tLevelID\t")
   load script
 end

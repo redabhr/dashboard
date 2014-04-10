@@ -89,7 +89,8 @@ namespace :seed do
                  { file: 'config/2014_script.csv', params: { name: '2014 Levels', trophies: false, hidden: true }},
                  { file: 'config/builder_script.csv', params: { name: 'Builder Levels', trophies: false, hidden: true }},
                  { file: 'config/flappy_script.csv', params: { name: 'Flappy Levels', trophies: false, hidden: true }},
-                 { file: 'config/jigsaw_script.csv', params: { name: 'Jigsaw Levels', trophies: false, hidden: true }}
+                 { file: 'config/jigsaw_script.csv', params: { name: 'Jigsaw Levels', trophies: false, hidden: true }}.
+                 { file: 'config/scripts/sample_level_builder.script.csv', params: { name: 'Sample', trophies: false, hidden: true }}
                 ]
       sources.each do |source|
         script = Script.where(source[:params]).first_or_create
@@ -97,11 +98,12 @@ namespace :seed do
         game_index = Hash.new{|h,k| h[k] = 0}
 
         CSV.read(source[:file], { col_sep: "\t", headers: true }).each_with_index do |row, index|
-          game = game_map[row[COL_GAME].squish]
           level_id = row[COL_LEVELID]
           if level_id
             level = Level.find(level_id)
+            game = level.game
           else
+            game = game_map[row[COL_GAME].squish]
             level = Level.find_by_game_id_and_level_num(game.id, row[COL_LEVEL])
             if (level.nil?)
               level = Level.create(:game_id => game.id, :level_num => row[COL_LEVEL], :name => row[COL_NAME])
