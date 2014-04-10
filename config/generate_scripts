@@ -1,8 +1,13 @@
 #!/usr/bin/env ruby
+
+require 'yaml'
+
 $stage = nil
 $level = 0
 $concepts = []
 $skin = nil
+$hash = {}
+$script_name
 
 dash_root = `git rev-parse --show-toplevel`.strip
 
@@ -11,6 +16,7 @@ def stage(name)
   $level = 0
   $concepts = []
   $skin = nil
+  $hash["en"]["data"]["script"]["name"][$script_name][$stage] = $stage
 end
 
 def concepts(*items)
@@ -27,10 +33,20 @@ def level(uri)
   puts "#{$stage}\t#{$concepts.join(',')}\t#{level_id}\t"
 end
 
-source = File.expand_path(ARGV.fetch(0, "#{dash_root}/config/scripts/*.script"))
+# Create locale file for scripts
+$hash = {"en" => {"data" => {"script" => {"name" => {}}}}}
+
+source = File.expand_path(ARGV.fetch(0, File.join(dash_root, "config", "scripts/*.script")))
 
 Dir.glob(source).each do |script|
+  $script_name = script.gsub(/.*\/(\w+).script$/, '\1')
+  $hash["en"]["data"]["script"]["name"][$script_name] = {"desc" => "A custom script"}
+
   $stdout.reopen("#{script}.csv", "w")
   puts("Stage\tConcepts\tLevelID\t")
   load script
+end
+
+File::open(File.join(dash_root, "config", "locales", "scripts.en.yml"), "w+") do |f|
+  f << $hash.to_yaml
 end
