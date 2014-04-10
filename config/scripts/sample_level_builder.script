@@ -1,6 +1,9 @@
 stage 'Introduction to Computer Science'
 
 stage 'The Maze'
-level 'learn.code.org/games/25/levels/142'
-level 'learn.code.org/games/25/levels/143'
-level 'learn.code.org/games/25/levels/144'
+level 'learn.code.org/games/25/levels/148'
+level 'learn.code.org/games/25/levels/149'
+
+stage 'The Coffee'
+level 'learn.code.org/games/25/levels/150'
+level 'learn.code.org/games/25/levels/151'
