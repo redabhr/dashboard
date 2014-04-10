@@ -26,7 +26,7 @@ def level(uri)
 end
 
 Dir.glob('scripts/*.script').each do |script|
-  $stdout.reopen("#{script}.csv", "w")
+  $stdout.reopen("'scripts/#{script}.csv", "w")
   puts("Stage  Concepts  LevelID")
   load script
 end
