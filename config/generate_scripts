@@ -4,6 +4,8 @@ $level = 0
 $concepts = []
 $skin = nil
 
+dash_root = `git rev-parse --show-toplevel`.strip
+
 def stage(name)
   $stage = name
   $level = 0
@@ -25,8 +27,10 @@ def level(uri)
   puts "#{$stage}\t#{$concepts.join(',')}\t#{level_id}\t"
 end
 
-Dir.glob('scripts/*.script').each do |script|
-  $stdout.reopen("'scripts/#{script}.csv", "w")
-  puts("Stage  Concepts  LevelID")
+source = File.expand_path(ARGV.fetch(0, "#{dash_root}/config/scripts/*.script"))
+
+Dir.glob(source).each do |script|
+  $stdout.reopen("#{script}.csv", "w")
+  puts("Stage\tConcepts\tLevelID\tGame\t")
   load script
 end
