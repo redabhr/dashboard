@@ -89,7 +89,7 @@ namespace :seed do
                  { file: 'config/2014_script.csv', params: { name: '2014 Levels', trophies: false, hidden: true }},
                  { file: 'config/builder_script.csv', params: { name: 'Builder Levels', trophies: false, hidden: true }},
                  { file: 'config/flappy_script.csv', params: { name: 'Flappy Levels', trophies: false, hidden: true }},
-                 { file: 'config/jigsaw_script.csv', params: { name: 'Jigsaw Levels', trophies: false, hidden: true }}.
+                 { file: 'config/jigsaw_script.csv', params: { name: 'Jigsaw Levels', trophies: false, hidden: true }},
                  { file: 'config/scripts/sample_level_builder.script.csv', params: { name: 'Sample', trophies: false, hidden: true }}
                 ]
       sources.each do |source|
